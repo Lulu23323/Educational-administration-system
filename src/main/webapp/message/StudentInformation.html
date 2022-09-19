@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml/DTD/xhtml-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Student Information Management</title>
+    <link rel="stylesheet" type="text/css" href="../css/StudentInformation.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+ 
+        <div class="wrapperBox">
+            <div class="header">
+                <div class="headerTitle">
+                    <div class="headerLine">Student Information Management</div>
+                </div>
+                
+                <div class="searchGroup">
+                    <button class="addButton">Add</button>
+                    <button class="deleteButton" id="deleteButton">Delete</button>
+                </div>
+            </div>
+            <div class="container">
+                <table id="containerTable">
+                    <thead class="tableHeaher">
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Academy</th>
+                        <th>Major</th>
+                        <th>Class</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+ 
+                    <tbody id="tdata">
+                    
+                    <tr class="trHover">
+					    <td><input type="checkbox"></td>
+					    <td class="stuId">20372101</td>
+					    <td class="stuName">Frank</td>
+					    <td class="stuAcademy">BDIC</td>
+					    <td class="stuMajor">SE</td>
+					    <td class="stuClass">1</td>
+					
+					    <td>
+					        <a class="viewInf ">View Details</ a>
+					        <a class="updateInf ">Modify</ a>
+					
+					    </td>
+					</tr>
+					
+					
+                    </tbody>
+                </table>
+                <!--增加的模态框-->
+                <div class="modal addfade" id="addmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>New Student Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Student ID:<input type="text" id="stu_ID"/>
+                                </p>
+                                <p>
+                                    Name:<input type="text" id="stu_name"/>
+                                </p>
+                                <p>
+                                    Academy:<input type="text" id="stu_academy" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" id="stu_major"/>
+                                </p>
+                                <p>
+                                    Class:<input type="text" id="stu_class"/>
+                                </p>
+
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <div class="pageInfoBox"></div>
+                                <button class="addButton_ok" onclick="addStu()">Determine</button>
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--修改的模态框-->
+                <div class="modal movefade movemodal" id="movemodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>Modify Student Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Student ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Name:<input type="text" />
+                                </p>
+                                <p>
+                                    Academy:<input type="text" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" />
+                                </p>
+                                <p>
+                                    Class:<input type="text" />
+                                </p>
+                                <p>
+                                    Admission time:<input type="text" />
+                                </p>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button class="updatabtn_ok">Save</button>
+                                <button class="updatabtn_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--查看的模态框-->
+                <div class="modal viewfade" id="viewmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>View Student Information</h4>
+                            </div>
+                            <div class="modal-body">
+                               
+                                <p>
+                                    Student ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Name:<input type="text" />
+                                </p>
+                                <p>
+                                    Academy:<input type="text" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" />
+                                </p>
+                                <p>
+                                    Class:<input type="text" />
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div class="footer">
+                <div class="pageInformation">
+                    Page <span id="curPage" style="color:black;"></span>,
+                    <span id="countPage" style="color:black;"></span> entries,(Ten each page)
+                    <input id="page" type="text"style="display: none" >
+                </div>
+                <div class="pageButton">
+                    <button id="prePageButton">Previous</button>
+                    <button id="nextPageButton">Next</button>
+                </div>
+            </div>
+        </div>
+        <script src="../jquery/jquery.min.js"></script>
+        <script src="../js/StudentInformation.js"></script>
+        
+       <script>
+         $.ajax({
+             type:"POST",
+             url:"/2009/showStudentServlet", //提交添加学院的网址
+             dataType:"json",
+             data:{},
+             success:function(res){
+                 console.log("传送全部数据成功");
+                 console.log(res);
+                 console.log(res.length);
+                 var html = "";
+	             for(var i = 0;i<res.length;i++){
+		              html+="<tr>"+
+		              '<td><input type="checkbox"></td>'+
+		              "<td>"+ res[i].account + "</td>"+
+		              "<td>"+ res[i].fullName + "</td>"+
+		              "<td>"+ res[i].college + "</td>"+
+		              "<td>"+ res[i].major + "</td>"+
+		              "<td>"+ res[i].classNumber + "</td>" +
+		              '<td>\
+		              <a class="viewInf ">View Details</a >\
+		              	<a class="updateInf ">Modify</a >\
+		              </td>' +
+		              "</tr>"
+	             }
+	             $("#tdata").append(html);
+	             page()
+	            },
+	            error:function(){
+	                alert("展示全部课程数据出错");
+	            },
+             error:function(){
+                 alert("展示全部学生数据出错");
+             }
+         })   
+        </script>
+        
+        <script>
+	        function showAction(){
+	            var className = document.getElementsByClassName('actions')[0];
+	            className.style.display = "block";
+				$.ajax({
+					type:"POST",
+					url:"/2009/showOperations",
+					success: function(res){
+						console.log(res);
+						$("#actions").html(res);
+					},
+					error: function(){
+						alert("wrong");
+					}
+				})
+	        }
+       </script>
+        
+        <script>
+	        function addStu(){
+	            var stu_ID = document.getElementById("stu_ID").value;
+	            var stu_name = document.getElementById("stu_name").value;
+	            var stu_academy = document.getElementById("stu_academy").value;
+                var stu_major = document.getElementById("stu_major").value;
+                var stu_class = document.getElementById("stu_class").value;
+	            $.ajax({
+	                type:"POST",
+	                url:"/2009/addStudentServlet", //提交添加学院的网址
+	                data:{
+	                	"stu_ID":stu_ID,
+	                	"stu_name":stu_name,
+	                	"stu_academy":stu_academy,
+	                	"stu_major":stu_major,
+	                	"stu_class":stu_class
+	                	
+	                },//提交的数据
+	                success:function(res){
+	                    console.log("传送student数据成功");
+	                    console.log(res);
+	                },
+	                error:function(){
+	                    alert("向后台传输student数据出错");
+	                }
+	            })   
+	
+	        };
+        </script>
+
+</body>
+</html>
+
+

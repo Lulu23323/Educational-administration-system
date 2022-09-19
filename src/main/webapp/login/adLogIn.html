@@ -1,0 +1,96 @@
+<head>
+
+  <script src="../js/passoword.js"></script>
+  <style type = "text/css">
+    @import url("../css/logInCSS.css");
+  </style>
+
+  <title>
+      BJUT Administration System login page
+  </title>
+</head>
+
+<body>
+  <section class="container">
+      <div class="span-6">
+        <div class="login">
+          <h1>Administrator Login</h1>
+            <div class="login-content">
+              <label id="accountLabel">Please enter your account</label>
+              <input id="account"  placeholder="Account" >
+              <label id="passwordLabel">Please enter your password</label>
+              <input type="password" id="password" placeholder="Password"><br>
+              <label id="canvasLabel">Please enter the vertification</label>
+              <input type="text" value="" id="text" placeholder="Enter the correct verification code" style="height:43px;position:relative;top:-15px;font-size:20px;"><br>
+              <canvas id="canvas" width="120" height="40" onclick="verti()" style = "border:2px solid rgb(255, 255, 255);border-radius:15px;"></canvas>
+              <br>
+              <br>
+              <a href="forgetPassword.html"> Forgot Password</a><br>
+              <input type="submit" value="Login" onclick = "passwordAd()">
+          
+        </div>
+    
+      </div>
+      
+  </section>
+
+  <script>
+    var show_num = [];
+    draw(show_num);
+    function verti(){
+      draw(show_num);
+    }
+
+    function draw(show_num){
+        var canvas_width=document.getElementById('canvas').clientWidth;
+        var canvas_height=document.getElementById('canvas').clientHeight;
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext("2d");
+        canvas.width = canvas_width;
+        canvas.height = canvas_height;
+        var sCode = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,1,2,3,4,5,6,7,8,9,0";
+        var aCode = sCode.split(",");
+        var alen=aCode.length;
+        for(var i = 0; i <=3; i++){
+            var j = Math.floor(Math.random()*alen);
+            var deg = Math.random()*30*Math.PI/180;
+            var txt = aCode[j];
+            show_num[i] = txt;
+            var x = 10+i*20;
+            var y = 20+Math.random()*8;
+            context.font = "bold 28px 微软雅黑";
+            
+            context.translate(x,y);
+            context.rotate(deg);
+            context.fillStyle = randomColor();
+            context.fillText(txt,0,0);
+            context.rotate(-deg);
+            context.translate(-x,-y);
+        }
+        for(var i =0; i <=5;i++){
+            context.strokeStyle = randomColor();
+            contextbeginPath();
+            context.moveTo(Math.random()*canvas_width,Math.random()*canvas_height);
+            context.lineTo(Math.random()*canvas_width,Math.random()*canvas_height);
+            context.stroke();
+        }
+        for(var i = 0; i <=30; i++){
+            context.strokeStyle = randomColor();
+            context.beiginPath();
+            var x = Math.random()*canvas_width;
+            var y = Math.random()*canvas_height;
+            context.moveTo(x,y);
+            context.lineTo(x+1, y+1);
+            context.stroke();
+        }
+    }
+
+    function randomColor(){
+        var a = Math.floor(Math.random()*256);
+        var b = Math.floor(Math.random()*256);
+        var c = Math.floor(Math.random()*256);
+        return "rgb("+a+","+b+","+c+")";
+    }
+  </script>
+</body>
+</html>

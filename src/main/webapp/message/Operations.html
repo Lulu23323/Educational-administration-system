@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../css/Operations.css">
+        <script src="../jquery/jquery.min.js"></script>
+    </head>
+    <body style="margin: 0px;padding:0px">
+        <div class="header">
+            <div class="headerTitle">
+                <div class="headerLine">Operation Record</div>
+            </div>
+        </div>
+        <!-- <input class="actions" id="actions" style="margin-left: 28%;width: 1600px;height: 850px;border: 0.1cm solid #A3D0C3;margin-top: 1%;" readOnly></input> -->
+        <textarea class="actions" id="actions" cols="40" rows="100"  style="margin-left: 25%;width: 850px;height: 850px;border: 0.1cm solid #A3D0C3;margin-top: 1%;font-size:0.5cm;font-weight:bold;padding:20px;color:#545151;" readOnly></textarea>
+    </body>
+    <script>
+        $.ajax({
+            type:"POST",
+            url:"/2009/showOperations",
+            success: function(res){
+                console.log(res);
+                $("#actions").html(res);
+            },
+            error: function(){
+                alert("wrong");
+            }
+        })
+    </script>
+</html>

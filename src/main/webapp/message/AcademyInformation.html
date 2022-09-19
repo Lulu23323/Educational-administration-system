@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml/DTD/xhtml-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Academy Information Management</title>
+    <link rel="stylesheet" type="text/css" href="../css/AcademyInformation.css">
+</head>
+<body>
+ 
+        <div class="wrapperBox">
+            <div class="header">
+                <div class="headerTitle">
+                    <div class="headerLine">Academy Information Management</div>
+                </div>
+                <!-- <div class="headerButton">
+                    <button class="addButton">Add</button>
+                    <button class="delbtn" id="deleteButton">Delete</button>
+                </div> -->
+                <div class="searchGroup">
+                    <button class="addButton">Add</button>
+                    <button class="deleteButton" id="deleteButton">Delete</button>
+                </div>
+            </div>
+            <div class="container">
+                <table id="containerTable">
+                    <thead class="tableHeaher">
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Academy ID</th>
+                        <th>Academy Name</th>
+                        <th>Academy Introduction</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+ 
+                    <tbody id="tdata">
+                    
+                    <tr class="trHover">
+
+					</tr>
+ 
+                    </tbody>
+                    <!-- <tfoot>
+                   <tr>
+                       <td colspan="4">
+                           <button class="delbtn ">删除</button>
+                          
+                       </td>
+                   </tr>
+                    </tfoot> -->
+                    <!-- </tbody> -->
+                </table>
+                <!--增加的模态框-->
+                <div class="modal addfade" id="addmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>New Academy Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Academy ID:<input type="text" id="academy_ID"/>
+                                </p>
+                                <p>
+                                    Academy Name:<input type="text" id="academy_name"/>
+                                </p>
+                            
+                                <p>
+                                    Academy Introduction:<input type="text" id="academy_intro"/>
+                                </p>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <div class="pageInfoBox"></div>
+                                <button class="addButton_ok" onclick="addAcademy()">Determine</button>
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--修改的模态框-->
+                <div class="modal movefade movemodal" id="movemodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>Modify Academy Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Academy ID:<input type="text" readOnly/>
+                                </p>
+                                <p>
+                                    Academy Name:<input type="text" />
+                                </p>
+
+                                <p>
+                                    Academy Introduction:<input type="text" />
+                                </p>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button class="updatabtn_ok">Save</button>
+                                <button class="updatabtn_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--查看的模态框-->
+                <div class="modal viewfade" id="viewmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>View Academy information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Academy ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Academy Name:<input type="text" />
+                                </p>
+
+                                <p>
+                                    Academy Introduction:<input type="text" />
+                                </p>
+
+                                
+                                    
+                            
+                                
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="pageInformation">
+                    Page<span id="curPage"></span>,
+                    <span id="countPage"></span> entries,(Ten each page)
+                    <input id="page" type="text"style="display: none" >
+                </div>
+                <div class="pageButton">
+                    <button id="prePageButton">Previous</button>
+                    <button id="nextPageButton">Next</button>
+                </div>
+            </div>
+        </div>
+        <script src="../jquery/jquery.min.js"></script>
+        <script src="../js/AcademyInformation.js"></script>
+
+        <script>
+	        function addAcademy(){
+	            var academy_ID = document.getElementById("academy_ID").value;
+	            var academy_name = document.getElementById("academy_name").value;
+	            var academy_intro = document.getElementById("academy_intro").value;
+	            $.ajax({
+	                type:"POST",
+	                url:"/2009/addCollegeServlet", //提交添加学院的网址
+	                data:{
+	                	"academy_ID":academy_ID,
+	                	"academy_name":academy_name,
+	                	"academy_intro":academy_intro
+	                },//提交的数据
+	                success:function(res){
+	                    console.log("传送学院数据成功");
+	                    console.log(res);
+	                },
+	                error:function(){
+	                    alert("向后台传输学院数据出错");
+	                }
+	            })   
+	
+	        };
+        </script>
+        <script>
+            $.ajax({
+                type:"POST",
+                url:"/2009/showCollegeServlet", //提交展示学院的网址
+				dataType:"json",
+                data:{
+                   
+                },//提交的数据
+                success:function(res){
+                    console.log("传送学院数据成功");
+                    console.log(res);
+                    var html = "";
+                        for(var i = 0;i<res.length;i++){
+                             html+="<tr>"+
+                             '<td><input type="checkbox"></td>'+
+                             "<td>"+ res[i].collegeAccount+ "</td>"+
+                             "<td>"+ res[i].college + "</td>"+
+                             "<td>"+ res[i].collegeIntro + "</td>"+
+                             '<td>\
+                             <a class="viewInf ">View Details</ a>\
+                              <a class="updateInf ">Modify</ a>\
+                             </td>'
+                             "</tr>"
+                        }
+                        $("#tdata").html("");
+                        $("#tdata").append(html);
+                        page();
+                },
+                error:function(){
+                    alert("向后台传输学院数据出错");
+                }
+            })   
+        </script>
+</body>
+</html>
+
+

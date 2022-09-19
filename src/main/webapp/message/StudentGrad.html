@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="../css/StudentGrad.css">
+        <script src="../jquery/jquery.min.js"></script>
+        <script src="../js/StudentGrad.js"></script>
+    </head>
+
+    <body>
+        <div class="grade">
+            <div class="head">
+                <i class="fa fa-graduation-cap" aria-hidden="true" style="font-size: 30px;margin-top: 7px;margin-bottom: 7px;">Grade query</i>
+            </div>
+            <hr>
+            <div class="gradeContent">
+                <table id="gradeTable" style="margin-top: 10px; text-align:center;">
+                    <thead class="tableHeaher" style="background-color:rgb(202 204 208);">
+                    <tr style="background-color:rgb(202 204 208);">
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Course grade</th>
+                        <th>Check</th>
+                    </tr>
+                    </thead>
+    
+                    <tbody id="gradedata">
+                    
+                        <tr class="trHover">
+                            <td class="couId">123</td>
+                            <td class="couName">DB</td>
+                            <td class="couGrade">100</td>
+                            <td>
+                                <a class="viewInf">Check Details</a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+    
+                 <!--查看的模态框-->
+                <div class="modal viewfade" id="viewmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>View Course information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Course ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Course Name:<input type="text" />
+                                </p>
+                        
+                                <p>
+                                    Course Introduction:<input type="text" />
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+  
+    <script>
+        var stu_id = top.account_transport;    //传输的学生id
+	        $.ajax({
+	            type:"POST",
+	            url:"/2009/showSingleStudentGradeServlet", //提交添加学院的网址
+	            dataType:"json",
+	            data:{
+                    "studentID":stu_id
+                },
+	            success:function(res){
+	                console.log("传送全部数据成功");
+	                console.log(res);
+	                var html = "";
+	            	for(var i = 0;i<res.length;i++){
+	            		html+="<tr>"+
+	            		"<td>"+ res[i].courseAccount + "</td>"+
+	            		"<td>"+ 333 + "</td>"+
+	            		"<td>"+ res[i].grade + "</td>"+
+	            		'<td>\
+	            		<a class="viewInf ">Check Details</a>\
+	            		</td>'
+	            		"</tr>"
+	            	}
+	            	$("#gradedata").append(html);
+	            },
+	            error:function(){
+	                alert("展示全部学生数据出错");
+	            }
+	        })   
+        </script>
+        <!-- <script>
+            var stu_id = top.account_transport;    //传输的学生id
+            $.ajax({
+                type:"POST",
+                url:"/2009/",   //提交查找学生成绩的网址
+                dataType:"json",
+                data:{
+                    "stu_id":stu_id
+                },//提交的数据
+                success:function(res){
+                    console.log("传送课程成绩成功");
+                    console.log(res);
+                    var dom = document.getElementById("main");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    option = null;
+                    option = {
+                        title: {
+                            //text: '某班级计算机基础考试成绩',
+                            subtext: '数据来源于文件导入'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['学生成绩']
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar']},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        calculable: true,
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: ['F', 'E', 'D', 'C', 'B', 'A']
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '学生成绩占比',
+                                type: 'bar',
+                                data: [5, 6, 2, 3, 3, 20],   //百分比
+                                markPoint: {
+                                    data: [
+                                        {type: 'max', name: '最大值'},
+                                        {type: 'min', name: '最小值'}
+                                    ]
+                                },
+                                // markLine: {
+                                //     data: [
+                                //         {type: 'average', name: '平均值'}
+                                //     ]
+                                // }
+                            }
+                        ]
+                    };
+                    myChart.setOption(option, true);
+                },
+                error:function(){
+                    alert("向后台传输课程成绩出错");
+                }
+            })   
+            </script> -->
+    
+</html>

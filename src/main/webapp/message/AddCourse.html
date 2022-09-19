@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+    <!-- <link rel="stylesheet" href="../css/AddPopup.css"> -->
+    <link rel="stylesheet" href="../css/AddCourse.css">
+    <meta charset="utf-8">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="addCourse">
+        
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couIntro">Course ID:<input></label>
+        </div>
+        <br>
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couIntro">Course Name:<input></label>
+        </div>
+        <br>
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couAcademy">Please choose the academy of the course:</label>
+            <!-- <input type="text" id="major-college" placeholder="college belongs"> -->
+            <select name="colleges" id="course-college" class="select-box">
+                <option value="college">academy</option>
+                <option value="BDIC">BDIC</option>
+                <option value="BDIC">BJUT</option>
+            </select>
+        </div>
+        <br>
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couMajor">Please choose the major of the course:</label>
+            <select name="majors" id="course-major" class="select-box">
+                <option value="college">major</option>
+                <option value="BDIC">软件工程</option>
+                <option value="BDIC">物联网</option>
+            </select>
+        </div>   
+        <br> 
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couIntro">Please choose the introduction of the course:<input></label>
+        </div>
+        <br>
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couCredits">Class Credit:</label>
+            <select name="Course Credits" id="course-credits">
+                <option value="credits">Credits</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div class="addC">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <label id="couScheduling">Class Scheduling: </label>
+                            <select name="Course Scheduling" id="course-scheduling">
+                                <option value="Scheduling">Scheduling</option>
+                                <option value="50">50h</option>
+                                <option value="60">60h</option>
+                                <option value="70">70h</option>
+                                <option value="80">80h</option>
+                            </select>
+        </div>
+           
+        <div class="addC">
+            <input type="submit" value="submit" onclick = "addCourse()">
+        </div>
+    </div>
+
+
+        </div>
+    </div>
+</body>
+<script>
+        var div = document.getElementById('background-pop');
+        var close = document.getElementById('close-button');
+        function show(){
+            div.style.display = "block";
+        }
+        close.onclick = function close() {
+            div.style.display = "none";
+        }
+        window.onclick = function close(e) {
+            if (e.target == div) {
+                div.style.display = "none";
+            }
+        }
+</script>
+
+<script>
+function addCourse(){
+	var SelectCollege = document.getElementById("course-college");
+	var selected_college =  Select.options.selected_college;
+	var optionCollege = Select.options[selected_colllege].value;
+	var SelectMajor = document.getElementById("course-major");
+	var selected_major =  Select.options.selected_major;
+	var optionMajor = Select.options[selected_major].value;
+	$.ajax({
+		 type:'POST',
+		 url:'', //添加课程的url
+		 data:{
+            "optionCollege":optionCollege,
+            "optionMajor":optionMajor,
+           },
+		 success:function(res){
+	            console.log("传送数据成功");
+	            console.log(res);
+
+	     },
+	     error:function(){
+	     	alert("向后台传输数据出错");
+	     }  
+		 
+	 })
+};
+</script>
+</html>

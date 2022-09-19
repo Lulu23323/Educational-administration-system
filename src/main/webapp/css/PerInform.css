@@ -1,0 +1,41 @@
+h3{
+  font-family: Calibri; 
+  font-size: 30pt;         
+  font-style: normal; 
+  font-weight: bold; 
+  color:#78b1a0;
+  text-align: center; 
+  text-decoration: underline
+}
+
+table{
+  font-family: Calibri; 
+  color:white; 
+  font-size: 15pt; 
+  font-style: normal;
+  font-weight: bold;
+  text-align:center;
+  background-color: #78b1a0; 
+  border-collapse: collapse; 
+  border: none;
+}
+table.inner{
+  border: 0px
+}
+
+.ptext{
+  font-weight: bold;
+}
+
+.subtitle-text{
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.input{
+  border:0px;
+  width:188px;
+  font-size: 18px;
+  font-weight: bold;
+}

@@ -1,0 +1,185 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/PerInform.css">
+    <script src="../jquery/jquery.min.js"></script>
+    <script src="../js/Cookie.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Per"></script>
+    <title>个人信息</title>
+</head>
+<body>
+    <h3>STUDENT PERSONAL INFORMATION</h3>
+    
+     
+    <table align="center" cellpadding = "20">
+     
+    <!----- First Name ---------------------------------------------------------->
+    <tr>
+    <td>STUDENT NAME</td>
+    <td><span type="text" maxlength="60" id="stuname"></span></td>
+    </tr>
+     
+    <!----- The Phone ---------------------------------------------------------->
+    <tr>
+    <td class="ptext">MOBILE NUMBER</td>
+    <td><input type="text" class="input" id="stuTelNumber"  readOnly maxlength="150" style="backgroung-color:#78b1a0;"><b></b></input></td>
+    </tr>
+     
+    <!----- Email Id ---------------------------------------------------------->
+    <tr>
+    <td class="ptext">EMAIL ID</td>
+    <td><input type="text" class="input" id="emas"  readOnly maxlength="150" ><b></b></input></td>
+    </tr>
+     
+    <!-- Enter time -->
+    <tr>
+    <td class="ptext">ENTER TIME</td>
+    <td><input type="text" class="input" id="ages"  readOnly maxlength="150" ><b></b></input></td>
+    </tr>
+     
+    <!----- Gender ----------------------------------------------------------->
+    <tr>
+    <td class="ptext">GENDER</td>
+    <td><input type="text" class="input" id="sexs"  readOnly maxlength="100" ><b></b></input></td>
+    </tr>
+     
+    <!-- Id number -->
+    <tr>
+    <td class="ptext">ID NUMBER</td>
+    <td><input type="text" class="input" id="stuIDNumber"  readOnly maxlength="100" ><b></b></input></td>
+    </tr>
+    
+    <!-- Student id -->
+    <tr>
+    <td class="ptext">STUDENT ID</td>
+    <td><span type="text" id="stuID"  readOnly maxlength="100" ><b></b></span></td>
+    </tr>
+
+    <!-- academy -->
+    <tr>
+    <td class="ptext">ACADEMY</td>
+    <td><span type="text"  id="stuCol"  readOnly maxlength="100" ><b></b></span></td>
+    </tr>
+
+    <!-- Major -->
+    <tr>
+    <td class="ptext">MAJOR</td>
+    <td><span type="text"  id="stuMajor"  readOnly maxlength="100" ><b></b></span></td>
+    </tr>
+
+    <!-- introduction -->
+    <tr>
+    <td class="subtitle-text">INTRODUCTION</td>
+    <td><textarea name="aboutme" onkeyup="wordStatic(this);"  id="aboutme"  rows="5" class="noresize js-sign moco-form-control" readonly style="font-size: 16px;margin-left:1px;"  readOnly>222</textarea>
+        <div class="weui_textarea_counter" style="display: none;"><span id="num">0</span>/300</div>
+        <button onclick="changedInformation()">Modify</button>
+        <button onclick="updateInformation()">Submit</button>
+    </td>
+    </tr>
+    
+</body>
+<script>
+	var stu_id = getCookie("account_tran");    //传输的学生id
+	$.ajax({
+	    type:"POST",
+	    url:"/2009/showSingleStudentServlet", //提交展示学生的网址
+	    dataType:"json",
+	    data:{
+	    	"stu_id":stu_id
+	    	},
+	    success:function(res){
+	        console.log("传送全部数据成功");
+	        console.log(res);
+	        console.log("college: "+ res[0].college);
+	        $('#stuCol').text(res[0].college);
+	        $('#stuMajor').text(res[0].major);
+	        $('#stuClass').text(res[0].classNumber);
+	        $('#stuname').text(res[0].fullName);
+	        $('#stuID').text(res[0].account);
+	        $('#ages').val(res[0].beginage);
+			$('#sexs').val(res[0].sex);
+			$('#emas').val(res[0].email);
+			$('#stuTelNumber').val(res[0].phonenumber);
+			$('#stuIDNumber').val(res[0].idnumber);
+			$('#aboutme').val(res[0].introduction);
+	    },
+	    error:function(){
+	        alert("展示全部学生数据出错");
+	    }
+	})
+</script>
+<script>
+
+    function wordStatic(input) {
+        // 获取要显示已经输入字数文本框对象
+        var content = document.getElementById('num');
+        if (content && input) {
+            // 获取输入框输入内容长度并更新到界面
+            var value = input.value;
+            // 将换行符不计算为单词数
+            value = value.replace(/\n|\r/gi,"");
+            // 更新计数
+            content.innerText = value.length;
+        }
+    }
+
+</script>
+<script>
+    function changedInformation(){
+        var className = document.getElementsByClassName('input');
+        for(var i = 0; i < className.length; i++){
+            className[i].style.border = "2px solid grey";
+            className[i].readOnly = false;
+        }
+        var className2 = document.getElementsByClassName('noresize js-sign moco-form-control')[0];
+        className2.readOnly = false;
+        var className3 = document.getElementsByClassName('weui_textarea_counter')[0];
+        className3.style.display = "block";
+
+    }
+
+
+    function updateInformation(){
+        var className = document.getElementsByClassName('input');
+        for(var i = 0; i < className.length; i++){
+            className[i].style.border = "0px solid white";
+            className[i].readOnly = true;
+        }
+        var className2 = document.getElementsByClassName('noresize js-sign moco-form-control')[0];
+        className2.readOnly = true;
+        var className3 = document.getElementsByClassName('weui_textarea_counter')[0];
+        className3.style.display = "none";
+		
+        var stu_id = top.account_transport;
+        var stu_sex = document.getElementById("sexs").value;
+        var stu_age = document.getElementById("ages").value;
+        var stu_email = document.getElementById("emas").value;
+        var stu_tel = document.getElementById("stuTelNumber").value;
+        var stu_IDnumber = document.getElementById("stuIDNumber").value;
+        var stu_infor = document.getElementById("aboutme").value;
+        $.ajax({
+            type:"POST",
+            url:"/2009/student_UpdateServlet", //提交修改学生信息的网址
+            data:{
+            	"stu_id":stu_id,
+            	"stu_sex":stu_sex,   
+            	"stu_age":stu_age,
+            	"stu_email":stu_email,
+            	"stu_tel":stu_tel,
+            	"stu_IDnumber":stu_IDnumber,
+            	"stu_infor":stu_infor
+
+            },//提交的数据
+            success:function(res){
+                console.log("传送student数据成功");
+                console.log(res);
+            },
+            error:function(){
+                alert("向后台传输student数据出错");
+            }
+        })
+    }
+</script>
+</html>

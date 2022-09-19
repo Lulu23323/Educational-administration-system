@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+        <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="../css/StudentGrad.css">
+        <script src="../jquery/jquery.min.js"></script>
+        <script src="../js/StudentGrad.js"></script>
+        <script src="../js/Cookie.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+
+    <body>
+        <div class="grade">
+            <div class="head">
+                <i class="fa fa-graduation-cap" aria-hidden="true" style="font-size: 30px;margin-top: 7px;margin-bottom: 7px;">Grade query</i>
+            </div>
+            <hr>
+            <div class="gradeContent">
+                <table id="gradeTable" style="margin-top: 10px; text-align:center;">
+                    <thead class="tableHeaher" style="background-color:rgb(202 204 208);">
+                    <tr style="background-color:rgb(202 204 208);">
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Course grade</th>
+                        <th>Check</th>
+                    </tr>
+                    </thead>
+    
+                    <tbody id="gradedata">
+                    
+                        <tr class="trHover">
+                            <td class="couId">123</td>
+                            <td class="couName">DB</td>
+                            <td class="couGrade">100</td>
+                            <td>
+                                <a class="viewInf">Check Details</a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+    
+                 <!--查看的模态框-->
+                <div class="modal viewfade" id="viewmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>View Course information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Course ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Course Name:<input type="text" />
+                                </p>
+                        
+                                <p>
+                                    Course Introduction:<input type="text" />
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+  
+    <script>
+        var stu_id = getCookie("account_tran");    //传输的学生id
+	        $.ajax({
+	            type:"POST",
+	            url:"/2009/showSingleStudentGradeServlet", //提交添加学院的网址
+	            dataType:"json",
+	            data:{
+                    "studentID":stu_id
+                },
+	            success:function(res){
+	                console.log("传送全部数据成功");
+	                console.log(res);
+	                var html = "";
+	            	for(var i = 0;i<res.length;i++){
+	            		html+="<tr>"+
+	            		"<td>"+ res[i].courseAccount + "</td>"+
+	            		"<td>"+ res[i].courseName + "</td>"+
+	            		"<td>"+ res[i].grade + "</td>"+
+	            		'<td>\
+	            		<a class="viewInf ">Check Details</a>\
+	            		</td>'
+	            		"</tr>"
+	            	}
+	            	$("#gradedata").append(html);
+	            },
+	            error:function(){
+	                alert("展示全部学生数据出错");
+	            }
+	        })   
+        </script>
+        
+    
+</html>

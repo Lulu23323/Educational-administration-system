@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Menu</title>
+    
+    <style type = "text/css">
+        @import url("../css/stMenu.css");
+    </style>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="../jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/Cookie.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+    <table width="100%" height="700" border="1" cellpadding="0" cellpadding="0" class="content" target = "content">
+        <!-- <tr>
+            <td colspan="2"  height="40">
+                <h2>Bjut Student Management System</h2>
+            </td>
+        </tr> -->
+        <tr>
+            <td width="60" align="center" valign="top">
+                <div class="menu-box" style="float:left">
+                    
+                    <div class="menu">
+                <!-- 侧边栏的标题 开始-->
+                <div class="menu-title">
+                    <img src = "../images/profile.jpg"  alt = ""> 
+                    <!-- <span>ID:20205724</span> -->
+                    <a id="IDStu"></a>
+
+                </div>
+                <!-- 侧边栏的标题 结束-->
+
+                <!-- 每一项导航 -->
+                <div class="menu-item">
+                    <input type="checkbox" id="menu-item1">
+                    <label for="menu-item1">
+                        <!-- <span>College Management</span> -->
+                        <a target="menuFrame" onclick = "loadPage('../message/PerI.html')">Personal Information</a>
+
+                        <!-- <i class="fa fa-caret-right" aria-hidden="true"></i> -->
+                    </label>
+                    
+                </div>
+
+                <div class="menu-item">  
+                    <input type="checkbox" id="menu-item2">
+                    <label for="menu-item2">
+                        <!-- <span>Major Management</span> -->
+                        <a target="menuFrame" onclick = "loadPage('../message/StudentCou.html')">Course Information</a>
+                        <!-- <i class="fa fa-caret-right" aria-hidden="true"></i> -->
+                    </label>
+                    
+                </div>
+
+                <div class="menu-item">
+                    <input type="checkbox" id="menu-item3">
+                    <label for="menu-item3">
+                        <a target="menuFrame" onclick = "loadPage('../message/StudentGra.html')">Exam Result</a>
+                        <!-- <span>Course Management</span> -->
+                        <!-- <i class="fa fa-caret-right" aria-hidden="true"></i> -->
+                    </label>
+                    
+                </div>
+
+                <div class="set-line"></div>
+
+                <div class="menu-item">
+
+                    <label>
+                        <i class="fa fa-chain-broken" aria-hidden="true"></i>
+                        <a href="../login/firstPage.html"  target="logout">Logout<a>
+                    </label>
+                </div>
+            </div>
+                </div>
+            </td>
+            <td>
+                <iframe id="content-frame" allowTransparency="true" src="" width="100%" height="100%" frameborder="0"></iframe>
+            </td>
+        </tr>
+        
+
+    </table>
+        
+
+    </div>
+
+    <script>
+        /* var b = new RegExp('([\\?|&])(.+?)=([^&?]*)', 'ig'),
+			ret = {},
+			arr = b.exec(window.location.href);
+		while (arr) {
+			ret[arr[2]] = arr[3];
+			arr = b.exec(window.location.href)
+		}
+
+        $("#IDStu").text("ID: "+ ret.account); 
+        top.account_transport = ret.account; */
+        /* function getCookie(name) {
+            var name = escape(name);
+            //读cookie属性，这将返回文档的所有cookie
+            var allcookies = document.cookie;
+            //查找名为name的cookie的开始位置
+            name += "=";
+            var pos = allcookies.indexOf(name);
+            //如果找到了具有该名字的cookie，那么提取并使用它的值
+            if (pos != -1) {                                             //如果pos值为-1则说明搜索"version="失败
+                var start = pos + name.length;                  //cookie值开始的位置
+                var end = allcookies.indexOf(";", start);        //从cookie值开始的位置起搜索第一个";"的位置,即cookie值结尾的位置
+                if (end == -1){
+                   end = allcookies.length;
+                }         //如果end值为-1说明cookie列表里只有一个cookie
+                var value = allcookies.substring(start, end); //提取cookie的值
+                return (value);                           //对它解码
+            } 
+            else 
+            {
+               return ""; //搜索失败，返回空字符串
+            }                              
+        } */
+        
+        $("#IDStu").text("ID: "+ getCookie("account_tran"));
+        console.log("chuanshude: "+getCookie("account_tran"));
+        
+        $("#right-contentS").css({"width": (screen.width-$(".menu-box").width()-44), height: $(window).height()-5});
+        
+        $("#right-content").css({"width": (screen.width), height: $(window).height()-5});
+        function loadPage(url){
+            $("#content-frame").attr("src", url);
+        }
+
+        /* function loadPage(url){
+            $("#content-frameS").attr("src", url);
+        }
+    
+        function rightChange(el){
+            //alert("value = " + el.checked + ", screen.width ="+ screen.width + ", screen.height ="+ screen.height);
+            $("#right-contentS").css({"width": (screen.width-$(".menu-box").width()-20)});
+            // } else {
+            // if (el.checked == true) {
+            //      $("#right-contentS").css({"width": (screen.width-$(".menu-box").width()-15)});
+            // } else {
+            //     $("#right-contentS").css({"width": (screen.width-$(".menu-box").width()-15)});
+            // }
+        } */
+    
+        </script>
+
+</body>
+
+</html>
+

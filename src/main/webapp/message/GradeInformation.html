@@ -1,0 +1,393 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml/DTD/xhtml-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Grade Information Management</title>
+    <link rel="stylesheet" type="text/css" href="../css/GradeInformation.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <!-- <link rel="stylesheet" href="../layui/css/layui.css" media="all"> -->
+</head>
+<body>
+<div class="wrapperBox">
+            <div class="header">
+                <div class="headerTitle">
+                    <div class="headerLine">Grade Information Management</div>
+                </div>
+                
+                <div class = "searchGrade">
+                            <!-- <div class="headerButton">
+			                    <button class="addButton">Add</button>
+			                    <button class="deleteButton" id="deleteButton">Delete</button>
+			                </div> -->
+                            
+                            <div class="searchGroup">
+                                <button class="addButton">Add</button>
+			                    <button class="deleteButton" id="deleteButton">Delete</button>
+                                <input type="text"  id="cou_IDS" placeholder="Course ID" autocomplete="off" class="border">
+                                <input type="text"  id="stu_IDS" placeholder="Student ID" autocomplete="off" class="border">
+                                <button class="searchButton_ok"  onclick="searchGrade()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        
+                            <!-- <p>
+                                Course ID:<input type="text" id="cou_IDS"/>
+                            </p>
+                            <button class="searchButton_ok" onclick="searchGrade()">Determine</button> -->
+                </div>
+             </div>  
+                <div class="container">
+                <table id="containerTable">
+                    <thead class="tableHeaher">
+                        
+
+                     
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Student ID</th>
+                       
+                        <th>Academy</th>
+                        <th>Major</th>
+                        <th>Course ID</th>
+						<th>Grade</th>
+                        <th>Operation</th>
+                    </tr>
+                    </thead>
+ 
+                    <tbody id="t2data">
+                    
+                    
+                    <tr class="trHover">
+                    <!-- <td><input type="checkbox"></td>
+                        <td class="couId">2010J</td>
+                        <td class="couName">Intro SE</td>
+                        <td class="couAcademy">BDIC</td>
+                        <td class="couMajor">SE</td>
+                        <td class="couIntroduction">nothing</td>
+                        <td>
+                            <a class="viewInf ">View Details</a>
+                            <a class="updateInf ">Modify</a>
+
+                        </td> -->
+                        
+                    
+    
+					</tr>
+
+
+ 
+                    </tbody>
+                    
+                   
+                </table>
+                <!--增加的模态框-->
+                <div class="modal addfade" id="addmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>New Grade Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Student ID:<input type="text" id="stu_ID"/>
+                                </p>
+                               
+                                <p>
+                                    Academy:<input type="text" id="stu_academy" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" id="stu_major"/>
+                                </p>
+                                <p>
+                                    Course ID:<input type="text" id="stu_course"/>
+                                </p>
+								<p>
+                                    Grade:<input type="text" id="stu_grade"/>
+                                </p>
+
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <div class="pageInfoBox"></div>
+                                <button class="addButton_ok" onclick="addGrade()">Determine</button>
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--修改的模态框-->
+                <div class="modal movefade movemodal" id="movemodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>Modify Grade Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Student ID:<input type="text" />
+                                </p>
+                              
+                                <p>
+                                    Academy:<input type="text" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" />
+                                </p>
+                                <p>
+                                    Course ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Grade:<input type="text" />
+                                </p>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button class="updatabtn_ok">Save</button>
+                                <button class="updatabtn_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--查看的模态框-->
+                <div class="modal viewfade" id="viewmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>View Grade Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <!-- 序号：<input type="text" class="viewStyle" disabled="disabled" /> -->
+                                </p>
+                               
+                                <p>
+                                    Name:<input type="text" />
+                                </p>
+                                <p>
+                                    Academy:<input type="text" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" />
+                                </p>
+                                <p>
+                                   Course ID:<input type="text" />
+                                </p>
+								<p>
+									Grade:<input type="text" />
+								</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="footer">
+                <div class="pageInformation">
+                    Page <span id="curPage" style="color:black;"></span>,
+                    <span id="countPage" style="color:black;"></span> entries,(five each page)
+                    <input id="page" type="text"style="display: none" >
+                </div>
+                <div class="pageButton">
+                    <button id="prePageButton">Previous</button>
+                    <button id="nextPageButton">Next</button>
+                </div>
+            </div>
+            </div>
+      
+       
+       
+    
+        <script src="../jquery/jquery.min.js"></script>
+        <script src="../js/GradeInformation.js"></script>
+        <script>
+        function addGrade(){
+            var stu_ID = document.getElementById("stu_ID").value;
+            var stu_name = document.getElementById("stu_name").value;
+            var stu_academy = document.getElementById("stu_academy").value;
+            var stu_major = document.getElementById("stu_major").value;
+            var stu_course = document.getElementById("stu_course").value;
+            var stu_grade = document.getElementById("stu_grade").value;
+            $.ajax({
+                type:"POST",
+                url:"/2009/addGradeServlet", //提交添加成绩的网址
+                data:{
+                 "stu_ID":stu_ID,
+                 "stu_name":stu_name,
+                 "stu_academy":stu_academy,
+                       "stu_major":stu_major,
+                       "stu_course":stu_course,
+                       "stu_grade":stu_grade
+                },//提交的数据
+                success:function(res){
+                    console.log("传送课程数据成功");
+                    console.log(res);
+                 
+                },
+                error:function(){
+                    alert("向后台传输课程数据出错");
+                }
+            })   
+
+        };
+            //显示 - 隐藏下拉列表
+		$("#id_div").mouseleave( function(){
+			$("#id_select_options").hide();
+		} );
+
+		function show_options()
+		{
+			if( $("#id_select_options").is(":hidden") )
+				$("#id_select_options").show();
+			else
+				$("#id_select_options").hide();
+		}
+
+		//复选框勾选，更新显示
+		function chk_changed()
+		{
+			var str_selected = "";
+			var lstChk = document.getElementsByName( "select_checkbox" );
+			for( var n = 0; n < lstChk.length; n++ )
+			{
+				if( lstChk[n].checked )
+					str_selected = str_selected + "/" + lstChk[n].value;
+			}
+			$("#id_select").val( str_selected.substring( 1, str_selected.length ) );
+		}
+		
+		function searchGrade(){
+		    var studentID = document.getElementById("stu_IDS").value; 
+            var courseID = document.getElementById("cou_IDS").value;
+            if(studentID==""){
+            	$.ajax({
+	                type:"POST",
+	                url:"/2009/showSingleCourseGradeServlet", //提交添加学院的网址
+	                dataType:"json",
+	                data:{
+	                 "courseID":courseID
+	                },//提交的数据
+	                success:function(res){
+	                    console.log("传送查找数据成功");
+	                    console.log(res);
+	                    console.log(res.length);
+	                    //JSONArray.parseArray(res);
+	                    
+	                    //console.log("zhuanhuanhou: "+res.length);
+	                    var html = "";
+	                    for(var i = 0;i<res.length;i++){
+		                     html+="<tr>"+
+		                     '<td><input type="checkbox"></td>'+
+		                     "<td>"+ res[i].account+ "</td>"+
+		                     "<td>"+ res[i].college + "</td>"+
+		                     "<td>"+ res[i].major + "</td>"+
+		                     "<td>"+ res[i].courseAccount + "</td>"+
+		                     "<td>"+ res[i].grade + "</td>"+
+		                     '<td>\
+		                     <a class="viewInf ">View Details</a >\
+		                      <a class="updateInf ">Modify</a >\
+		                     </td>'
+		                     "</tr>"
+	                    }
+						$("#t2data").html("");
+	                    $("#t2data").append(html);
+	                    page();
+	                },
+	                error:function(){
+	                    alert("向后台传输查找数据出错");
+	                }
+	            }) 
+	        
+            }else if(courseID==""){
+            	$.ajax({
+	                type:"POST",
+	                url:"/2009/showSingleStudentGradeServlet", //提交添加学院的网址
+	                dataType:"json",
+	                data:{
+	                 "studentID":studentID
+	                },//提交的数据
+	                success:function(res){
+	                    console.log("传送查找数据成功");
+	                    console.log(res);
+	                    console.log(res.length);
+	                   
+	                    var html = "";
+	                    for(var i = 0;i<res.length;i++){
+		                     html+="<tr>"+
+		                     '<td><input type="checkbox"></td>'+
+		                     "<td>"+ res[i].account+ "</td>"+
+		                     "<td>"+ res[i].college + "</td>"+
+		                     "<td>"+ res[i].major + "</td>"+
+		                     "<td>"+ res[i].courseAccount + "</td>"+
+		                     "<td>"+ res[i].grade + "</td>"+
+		                     '<td>\
+		                     <a class="viewInf ">View Details</a >\
+		                      <a class="updateInf ">Modify</a >\
+		                     </td>'
+		                     "</tr>"
+	                    }
+						$("#t2data").html("");
+	                    $("#t2data").append(html);
+	                    page()
+	                },
+	                error:function(){
+	                    alert("向后台传输查找数据出错");
+	                }
+	            }) 
+
+            }else{
+            	$.ajax({
+	                type:"POST",
+	                url:"/2009/showbyStudentAndCourseServlet", //查找课程学生的网址
+	                dataType:"json",
+	                data:{
+	                 "studentID":studentID,
+	                 "courseID":courseID
+	                },//提交的数据
+	                success:function(res){
+	                    console.log("传送查找数据成功");
+	                    console.log(res);
+	                    console.log(res.length);
+	                    
+	                    var html = "";
+	                    for(var i = 0;i<res.length;i++){
+		                     html+="<tr>"+
+		                     '<td><input type="checkbox"></td>'+
+		                     "<td>"+ res[i].account+ "</td>"+
+		                     "<td>"+ res[i].college + "</td>"+
+		                     "<td>"+ res[i].major + "</td>"+
+		                     "<td>"+ res[i].courseAccount + "</td>"+
+		                     "<td>"+ res[i].grade + "</td>"+
+		                     '<td>\
+		                     <a class="viewInf ">View Details</a >\
+		                      <a class="updateInf ">Modify</a >\
+		                     </td>'
+		                     "</tr>"
+	                    } 
+						$("#t2data").html("");
+	                    $("#t2data").append(html);
+	                    page()
+	                },
+	                error:function(){
+                    	alert('ajax请求出现错误...');
+                    },
+  
+            	})         
+            }	            
+		}
+        </script>
+
+</body>
+</html>
+
+

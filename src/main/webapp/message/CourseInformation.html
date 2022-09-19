@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml/DTD/xhtml-transitional.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Grade Information Management</title>
+    <link rel="stylesheet" type="text/css" href="../css/CourseInformation.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+ 
+        <div class="wrapperBox">
+            <div class="header">
+                <div class="headerTitle">
+                    <div class="headerLine">Course Information Management</div>
+                </div>
+               
+                <div class="searchGroup">
+                    <button class="addButton">Add</button>
+                    <button class="deleteButton" id="deleteButton">Delete</button>
+                </div>
+            </div>
+            <div class="container">
+                <table id="containerTable">
+                    <thead class="tableHeaher">
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Course ID</th>
+                        <th>Course Name</th>
+                        <th>Academy</th>
+                        <th>Major</th>
+                        <th>Introduction</th>
+                        <th>Operation</th>
+                        <th>Check Grade</th>
+                    </tr>
+                    </thead>
+ 
+                    <tbody id="tdata">
+                    
+                    <tr class="trHover">
+                        <td><input type="checkbox"></td>
+                        <td class="couId">2010J</td>
+                        <td class="couName">Intro SE</td>
+                        <td class="couAcademy">BDIC</td>
+                        <td class="couMajor">SE</td>
+                        <td class="couIntroduction">nothing</td>
+                        <td>
+                            <a class="viewInf ">View Details</a>
+                            <a class="updateInf ">Modify</a>
+
+                        </td>
+                        <td><button onclick="show1(this)" class="btn">Grade</button></td>
+                    </tr>
+
+ 
+                    </tbody>
+                </table>
+                <!--成绩的模态框-->
+                
+                <div id="background" class="back">
+                    <div id="div1" class="content">
+                        <div id="close">
+                            <span id="close-button">×</span>
+                            <h2>View Grade information</h2>
+                        </div>
+                        <div id="div2">
+                            <div >
+                                <table>
+                                   <thead>
+                                    <tr>
+                                        <th>Course ID</th>
+                                        <th>Student ID</th>
+                                        <th>Major</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                    <!--  <tr>
+                                        <td >COMP2010J</td>
+                                        <td >20372120</td>
+                                        <td>Luna</td>
+                                        <td >SE</td>
+                                        <td >A</td>
+                                       
+                                    </tr>  -->
+                                    </thead>
+                 
+                                    <tbody id="gdata">
+                                    	<tr>
+	                                        <td >2008J</td>
+	                                        <td >20372120</td>
+	                                        <td >SE</td>
+	                                        <td >A</td>
+                                    	</tr>  
+                                    
+                
+                                    </tbody>
+                                </table> 
+                            </div>
+                        </div>
+                        <h3 id="foot">Course ID: COMP2010J</h3>
+                    </div>
+                </div>
+           
+                <!--增加的模态框-->
+                <div class="modal addfade" id="addmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>New Course Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Course ID:<input type="text" id="course_ID"/>
+                                </p>
+                                <p>
+                                    Course Name:<input type="text" id="course_name"/>
+                                </p>
+                            
+                                <p>
+                                    Academy:<input type="text" id="course_academy"/>
+                                   
+                                </p>
+                                <p>
+                                    Major:<input type="text" id="course_major"/>
+                                   
+                                </p>
+                                <p>
+                                    Course Introduction:<input type="text" id="course_intro"/>
+                                </p>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <div class="pageInfoBox"></div>
+                                <button class="addButton_ok" onclick="addCourse()">Determine</button>
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--修改的模态框-->
+                <div class="modal movefade movemodal" id="movemodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>Modify Course Information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Course ID:<input type="text" id="ChangeCourseID"/>
+                                </p>
+                                <p>
+                                    Course Name:<input type="text" id="ChangeCourseName"/>
+                                </p>
+                            
+                                <p>
+                                    Academy:<input type="text" id="ChangeCourseAcademy"/>
+                                   
+                                </p>
+                                <p>
+                                    Major:<input type="text" id="ChangeCourseMajor"/>
+                                    
+                                </p>
+                                <p>
+                                    Course Introduction:<input type="text" id="ChangeCourseIntro"/>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="updatabtn_ok">Save</button>
+                                <button class="updatabtn_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+ 
+ 
+                <!--查看的模态框-->
+                <div class="modal viewfade" id="viewmodal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <i>X</i>
+                                <h4>View Course information</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Course ID:<input type="text" />
+                                </p>
+                                <p>
+                                    Course Name:<input type="text" />
+                                </p>
+                            
+                                <p>
+                                    Academy:<input type="text" />
+                                </p>
+                                <p>
+                                    Major:<input type="text" />
+                                </p>
+                                <p>
+                                    Course Introduction:<input type="text" />
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="addButton_no">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div class="footer">
+                <div class="pageInformation">
+                    Page <span id="curPage" style="color:black;"></span>,
+                    <span id="countPage" style="color:black;"></span> entries,(Ten each page)
+                    <input id="page" type="text"style="display: none" >
+                </div>
+                <div class="pageButton">
+                    <button id="prePageButton">Previous</button>
+                    <button id="nextPageButton">Next</button>
+                </div>
+            </div>
+        </div>
+        <script src="../jquery/jquery.min.js"></script>
+        <script src="../js/CourseInformation.js"></script>
+        
+        <script>
+	        $.ajax({
+	            type:"POST",
+	            url:"/2009/showCoursesServlet", //展示课程的网址
+	            dataType:"json",
+	            data:{},
+	            success:function(res){
+	                console.log("传送全部数据成功");
+	                console.log(res);
+	                var html = "";
+	            	for(var i = 0;i<res.length;i++){
+	            		html+="<tr>"+
+	            		'<td><input type="checkbox"></td>'+
+	            		"<td>"+ res[i].courseAccount + "</td>"+
+	            		"<td>"+ res[i].course + "</td>"+
+	            		"<td>"+ res[i].college + "</td>"+
+	            		"<td>"+ res[i].major + "</td>"+
+	            		"<td>"+ res[i].intro + "</td>"+
+	            		'<td>\
+	            		<a class="viewInf ">View Details</a>\
+	            			<a class="updateInf ">Modify</a>\
+	            		</td>'+
+	            		'<td><button class="btn" onclick="show1(this)">Grade</td>'+
+	            		"</tr>"
+	            	}
+	            	$("#tdata").append(html);
+	            	page()
+	            },
+	            error:function(){
+	                alert("展示全部课程数据出错");
+	            }
+	        })   
+        </script>
+       <script>
+	        function showAction(){
+	            var className = document.getElementsByClassName('actions')[0];
+	            className.style.display = "block";
+				$.ajax({
+					type:"POST",
+					url:"/2009/showOperations",
+					success: function(res){
+						console.log(res);
+						$("#actions").html(res);
+					},
+					error: function(){
+						alert("wrong");
+					}
+				})
+	        }
+       </script>
+        
+        <script>
+	        function addCourse(){
+	            var course_ID = document.getElementById("course_ID").value;
+	            var course_name = document.getElementById("course_name").value;
+	            var course_academy = document.getElementById("course_academy").value;
+                var course_major = document.getElementById("course_major").value;
+                var course_intro = document.getElementById("course_intro").value;
+	            $.ajax({
+	                type:"POST",
+	                url:"/2009/addCourseServlet", //提交添加课程的网址
+	                data:{
+	                	"course_ID":course_ID,
+	                	"course_name":course_name,
+	                	"course_academy":course_academy,
+                        "course_major":course_major,
+                        "course_intro":course_intro
+	                },//提交的数据
+	                success:function(res){
+	                    console.log("传送课程数据成功");
+	                    console.log(res);
+	                },
+	                error:function(){
+	                    alert("向后台传输课程数据出错");
+	                }
+	            })   
+	
+	        };
+
+        
+        </script>
+       
+</body>
+</html>
+
+
